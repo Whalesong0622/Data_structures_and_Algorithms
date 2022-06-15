@@ -10,7 +10,7 @@
 template <typename KeyType, typename ValueType>
 class chainedHash
 {
-public:
+private:
     int _table_size;
     struct ChainNode
     {
@@ -38,8 +38,8 @@ public:
     void insert(KeyType key, ValueType value)
     {
         int index = getIndex(key);
-        std::shared_ptr<ChainNode> node_ptr = std::make_shared<ChainNode>(key, value);
-        std::shared_ptr<ChainNode> cur_ptr(_hash_table[index]);
+        auto node_ptr = std::make_shared<ChainNode>(key, value);
+        auto cur_ptr(_hash_table[index]);
         while (cur_ptr->_nxt != nullptr)
         {
             cur_ptr = cur_ptr->_nxt;
@@ -49,7 +49,7 @@ public:
     bool search(KeyType key, ValueType &res)
     {
         int index = getIndex(key);
-        std::shared_ptr<ChainNode> ptr(_hash_table[index]);
+        auto ptr(_hash_table[index]);
         ptr = ptr->_nxt;
         while (ptr != nullptr)
         {
@@ -65,7 +65,7 @@ public:
     void erase(KeyType key)
     {
         int index = getIndex(key);
-        std::shared_ptr<ChainNode> ptr(_hash_table[index]);
+        auto ptr(_hash_table[index]);
         while (ptr != nullptr)
         {
             if (ptr->_nxt->_key == key)
